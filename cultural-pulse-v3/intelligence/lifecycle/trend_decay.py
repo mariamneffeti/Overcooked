@@ -1,0 +1,1 @@
+"""Predict trend longevity decay."""

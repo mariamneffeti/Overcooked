@@ -1,0 +1,1 @@
+"""Global viral threshold constants."""
