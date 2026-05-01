@@ -7,6 +7,7 @@ import { DecodeProvider } from "@/state/DecodeContext";
 import { AppHeader } from "@/components/AppHeader";
 import { LiveTicker } from "@/components/LiveTicker";
 import { ContextSidebar } from "@/components/ContextSidebar";
+import { ThemeProvider } from "next-themes";
 import Radar from "./pages/Radar";
 import Intelligence from "./pages/Intelligence";
 import Strategist from "./pages/Strategist";
@@ -17,30 +18,32 @@ const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <DecodeProvider>
-          <div className="min-h-screen flex flex-col">
-            <AppHeader/>
-            <div className="flex-1 flex">
-              <ContextSidebar/>
-              <div className="flex-1 flex flex-col min-w-0">
-                <Routes>
-                  <Route path="/" element={<Radar />} />
-                  <Route path="/intelligence" element={<Intelligence />} />
-                  <Route path="/strategist" element={<Strategist />} />
-                  <Route path="/safety" element={<Safety />} />
-                  <Route path="*" element={<NotFound />} />
-                </Routes>
+    <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <DecodeProvider>
+            <div className="min-h-screen flex flex-col">
+              <AppHeader/>
+              <div className="flex-1 flex">
+                <ContextSidebar/>
+                <div className="flex-1 flex flex-col min-w-0">
+                  <Routes>
+                    <Route path="/" element={<Radar />} />
+                    <Route path="/intelligence" element={<Intelligence />} />
+                    <Route path="/strategist" element={<Strategist />} />
+                    <Route path="/safety" element={<Safety />} />
+                    <Route path="*" element={<NotFound />} />
+                  </Routes>
+                </div>
               </div>
+              <LiveTicker/>
             </div>
-            <LiveTicker/>
-          </div>
-        </DecodeProvider>
-      </BrowserRouter>
-    </TooltipProvider>
+          </DecodeProvider>
+        </BrowserRouter>
+      </TooltipProvider>
+    </ThemeProvider>
   </QueryClientProvider>
 );
 

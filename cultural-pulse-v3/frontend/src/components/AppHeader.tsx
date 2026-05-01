@@ -1,6 +1,8 @@
 import { NavLink, useLocation } from "react-router-dom";
-import { Radar, Brain, ScrollText, ShieldAlert, Activity } from "lucide-react";
+import { Radar, Brain, ScrollText, ShieldAlert, Activity, Sun, Moon } from "lucide-react";
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { useTheme } from "next-themes";
 import { useDecode } from "@/state/DecodeContext";
 
 const nav = [
@@ -13,10 +15,17 @@ const nav = [
 export function AppHeader() {
   const { pathname } = useLocation();
   const { trends, alerts } = useDecode();
+  const { resolvedTheme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
   const live = trends.filter(t => t.phase !== "Declining").length;
+  const isDark = resolvedTheme !== "light";
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
-    <header className="sticky top-0 z-40 glass-strong border-b border-white/10">
+    <header className="sticky top-0 z-40 glass-strong border-b border-border/70">
       <div className="flex items-center gap-6 px-6 py-3">
         <NavLink to="/" className="flex items-center gap-3 group">
           <div className="relative h-8 w-8 rounded-md grid place-items-center bg-gradient-to-br from-primary to-magma overflow-hidden">
@@ -56,7 +65,23 @@ export function AppHeader() {
         </nav>
 
         <div className="ml-auto flex items-center gap-4 font-mono text-xs">
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-md bg-white/5 border border-white/10">
+          <button
+            type="button"
+            onClick={() => setTheme(isDark ? "light" : "dark")}
+            className="h-9 w-9 rounded-lg border border-border/70 bg-card/60 hover:bg-card transition-colors grid place-items-center text-muted-foreground hover:text-foreground"
+            aria-label={isDark ? "Switch to light theme" : "Switch to dark theme"}
+            title={isDark ? "Switch to light theme" : "Switch to dark theme"}
+          >
+            {!mounted ? (
+              <Moon className="h-4 w-4" />
+            ) : isDark ? (
+              <Sun className="h-4 w-4" />
+            ) : (
+              <Moon className="h-4 w-4" />
+            )}
+          </button>
+
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-md bg-card/50 border border-border/70">
             <span className="h-2 w-2 rounded-full bg-primary glow-cyan animate-pulse"/>
             <span className="text-muted-foreground">LIVE</span>
             <span className="text-foreground tabular-nums">{live} signals</span>
