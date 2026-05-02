@@ -1,4 +1,4 @@
-#MediaIQ
+# MediaIQ
 MediaIQ is an intelligent data processing and visualization platform. It leverages a Next.js frontend for a seamless user experience and a Python-powered backend to handle data ingestion, intelligence gathering, and vector-based storage.
 
 ## Features
