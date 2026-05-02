@@ -1,0 +1,118 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* DECODE-TN — Cinematic Dark Command design system */
+@layer base {
+  :root {
+    --background: 222 47% 4%;
+    --foreground: 210 40% 98%;
+    --surface: 222 40% 7%;
+    --surface-elevated: 222 35% 10%;
+    --card: 222 40% 7%;
+    --card-foreground: 210 40% 98%;
+    --primary: 187 92% 53%;
+    --primary-foreground: 222 47% 4%;
+    --primary-glow: 187 100% 65%;
+    --magma: 344 100% 59%;
+    --magma-foreground: 0 0% 100%;
+    --magma-glow: 344 100% 70%;
+    --amber: 43 96% 56%;
+    --amber-foreground: 222 47% 4%;
+    --secondary: 222 30% 14%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 222 30% 12%;
+    --muted-foreground: 215 20% 55%;
+    --border: 217 33% 18%;
+    --input: 217 33% 18%;
+    --ring: 187 92% 53%;
+    --radius: 0.875rem;
+    --glow-cyan:  0 0 32px hsl(187 92% 53% / 0.45), 0 0 8px hsl(187 92% 53% / 0.6);
+    --glow-magma: 0 0 32px hsl(344 100% 59% / 0.55), 0 0 8px hsl(344 100% 59% / 0.7);
+    --glow-amber: 0 0 28px hsl(43 96% 56% / 0.5);
+    --shadow-elev: 0 24px 60px -20px hsl(222 60% 2% / 0.8);
+    --gradient-grid:
+      linear-gradient(hsl(217 33% 18% / 0.4) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(217 33% 18% / 0.4) 1px, transparent 1px);
+  }
+}
+
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html, body {
+    height: 100%;
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', system-ui, sans-serif;
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -10%, hsl(187 92% 53% / 0.08), transparent),
+      radial-gradient(ellipse 60% 40% at 90% 110%, hsl(344 100% 59% / 0.05), transparent);
+    background-color: hsl(var(--background));
+    background-attachment: fixed;
+  }
+
+  .font-mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+}
+
+@layer components {
+  .glass {
+    @apply backdrop-blur-xl border border-white/10 transition-colors duration-300;
+    background: hsl(222 40% 7% / 0.7);
+    box-shadow: var(--shadow-elev), inset 0 1px 0 hsl(0 0% 100% / 0.04);
+  }
+  .glass-strong {
+    @apply backdrop-blur-2xl border border-white/10;
+    background: hsl(222 40% 7% / 0.85);
+    box-shadow: var(--shadow-elev), inset 0 1px 0 hsl(0 0% 100% / 0.06);
+  }
+  .glass-hover {
+    @apply transition-all duration-300;
+  }
+  .glass-hover:hover {
+    background: hsl(222 40% 10% / 0.8);
+    @apply border-white/20;
+  }
+
+  .grid-bg {
+    background-image: var(--gradient-grid);
+    background-size: 48px 48px;
+  }
+
+  .text-gradient-cyan {
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(199 89% 60%));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .text-gradient-magma {
+    background: linear-gradient(135deg, hsl(var(--magma)), hsl(344 100% 70%));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .glow-cyan  { box-shadow: var(--glow-cyan); }
+  .glow-magma { box-shadow: var(--glow-magma); }
+  .glow-amber { box-shadow: var(--glow-amber); }
+
+  .caret::after {
+    content: '▌';
+    color: hsl(var(--primary));
+    animation: blink 1s steps(1) infinite;
+    margin-left: 2px;
+  }
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  .tabular-nums { font-variant-numeric: tabular-nums; }
+}
+
+@keyframes blink { 50% { opacity: 0; } }
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
